@@ -1,0 +1,64 @@
+{% extends 'zabbix/base.html' %}
+
+{% block content %}
+
+
+    {% if alert_info.img_name != ' ' %}
+        <div id='zabbix_img' class="zabbix_img">
+            <script>
+                var img_name = "{{ alert_info.img_name }}"
+                document.write('<img src="../../image.html?id='+img_name+'"/>')
+            </script>
+        </div>
+    {% endif %}
+
+
+    <table class="msg_info">
+        <tr>
+            <th>项目</th>
+            <th>检查结果</th>
+        </tr>
+
+        {% for each in alert_info.msg %}
+            <tr>
+                <td>{{ each.0 }}</td>
+                <td>{{ each.1 }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if isknow == '0' %}
+        <form>
+            <div class="weui_cells_title">知晓事件</div>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell weui_cell_switch">
+                    <div class="weui_cell_hd weui_cell_primary">已知晓</div>
+                    <div class="weui_cell_ft">
+                        <input class="weui_switch" name="acknowledge" value="true" checked type="checkbox">
+                    </div>
+                </div>
+            </div>
+            <div class="weui_btn_area">
+                <a class="weui_btn weui_btn_primary" onclick="get_acknow({{ eventid }})" id="button">提交</a>
+            </div>
+        </form>
+
+    {% else %}
+        <div class="alert_conf">
+            <table >
+                <tr>
+                    <th>确认时间</th>
+                    <th>确认信息</th>
+                </tr>
+                <tr>
+                    {% for each in isknow %}
+                        <td>{{ each }}</td>
+                    {% endfor %}
+                </tr>
+            </table>
+        </div>
+    {% endif %}
+
+
+
+{% endblock %}

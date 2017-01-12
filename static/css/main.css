@@ -1,0 +1,152 @@
+
+
+.zabbix_img{
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    vertical-align: middle;
+}
+
+
+.info_list {
+    width: auto;
+}
+
+.info_list p {
+    font: 12px "MicroSoft YaHei", "Courier New", "Andale Mono", monospace;
+    color: #000;
+    background-color: #F8F8F8;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    margin-left: 0px;
+
+
+}
+table,td,th
+{
+    border:0px;
+}
+table
+{
+    width:100%;
+}
+th
+{
+    height:5px;
+    background-color: #b7c5b4;
+}
+td{
+    background-color: #dee6df;
+}
+
+
+body, html {
+    height: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+.demos-title {
+    text-align: center;
+    font-size: 20px;
+    color: #3cc51f;
+    font-weight: 400;
+    margin: 0 5%;
+}
+
+.demos-sub-title {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+.demos-header {
+    padding: 3px 0;
+}
+
+.demos-content-padded {
+    padding: 15px;
+}
+
+.demos-second-title {
+    text-align: center;
+    font-size: 24px;
+    color: #3cc51f;
+    font-weight: 400;
+    margin: 0 15%;
+}
+
+footer {
+    text-align: center;
+    font-size: 14px;
+    padding: 20px;
+}
+
+footer a {
+    color: #999;
+    text-decoration: none;
+}
+
+.normal-bg {
+    color: #0bb20c;
+    background-color: #bfe6c7;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+
+.high-bg {
+    color: #c13e3e;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+.normal-font {
+    color: #0bb20c;
+}
+
+.info_list p {
+    font: 12px "MicroSoft YaHei", "Courier New", "Andale Mono", monospace;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    color: #000;
+    background-color: #F8F8F8;
+    line-height: 20px;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    border-radius: 3px;
+    margin-left: 1px;
+
+
+}
+
+.zabbix_img img{
+    width: 26em;
+    margin-left:auto;
+}
+
+body{
+    background-color: #efeff4;
+}
+
+.cover{
+    display: block;
+    width: 42px;
+    height: 42px;
+    margin-right: 15px;
+}
+.title{
+    font-weight: 400;
+    margin-right: 15px;
+    font-size: 16px;
+}
+.summary{
+    font-size: 14px;
+    margin-right: 15px;
+    color: #888888;
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+

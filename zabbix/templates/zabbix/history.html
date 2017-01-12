@@ -1,0 +1,39 @@
+{% extends 'zabbix/base.html' %}
+
+{% block content %}
+
+    <div class="bd">
+
+
+
+    <div class="bd">
+        <div class="weui_cells_title">报警时间 | 是否知晓</div>
+        <div class="weui_cells weui_cells_access">
+            {% for each in history %}
+                {% if each.1 == 0 %}
+                    <div class="high-bg">
+                {% else %}
+                    <div class="normal-bg">
+                {% endif %}
+
+            <a class="weui_cell"  href="{% url 'zabbix.views.detail' event_id=each.3 time_stm=each.2 %}">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>{{ each.0 }}</p>
+                </div>
+
+                {% if each.1 == 0 %}
+                    <div  class="weui_cell_ft" >
+                        未知晓
+                    </div>
+                {% else %}
+                    <div class="weui_cell_ft">已知晓</div>
+                {% endif %}
+            </a>
+            </div>
+
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

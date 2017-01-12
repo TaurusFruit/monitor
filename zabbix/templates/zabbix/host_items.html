@@ -1,0 +1,45 @@
+{% extends 'zabbix/base.html' %}
+
+{% block content %}
+
+<div class="bd">
+
+    <div class="weui_cells_title">触发器名称 | 触发器状态</div>
+
+    <div class="weui_cells weui_cells_access">
+        {% for each in items %}
+                         {% if each.2 == 1 %}
+                    <div class="high-bg">
+                {% else %}
+                    <div class="normal-bg">
+                {% endif %}
+            <div class="item_{{ each.2 }}">
+                <a class="weui_cell"  href="../history.html?item_id={{ each.1 }}">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <script>
+                            var items = "{{ each.0 }}";
+                            if(items.length > 30){
+                                document.write('<p>'+items.slice(0,30)+'</p>')
+                                document.write('<p>'+items.slice(30)+'</p>')
+
+                            }else{
+                                document.write('<p>'+items+'</p>')
+                            }
+                        </script>
+                    </div>
+                    {% if each.2 == 1 %}
+                        <div  class="weui_cell_ft" >
+                            <div class="ui-reddot-border">故障</div>
+                        </div>
+                    {% else %}
+                        <div  class="weui_cell_ft" >正常</div>
+                    {% endif %}
+
+                </a>
+            </div>
+            </div>
+        {% endfor %}
+
+</div>
+
+{% endblock %}
