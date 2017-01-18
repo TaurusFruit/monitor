@@ -28,7 +28,10 @@ class DBMod(Base):
 		      "WHERE alerts.eventid=%s " \
 		      "GROUP BY events.clock" % event_id
 		res = self.execute_sql(sql)
-		return res[0][0]
+		if len(res) > 0:
+			return res[0]
+		else:
+			return -1
 
 
 	def GetEventAcknow(self,event_id):
@@ -67,30 +70,31 @@ class DBMod(Base):
 	# 	rs = self.execute_sql(sql)
 	# 	return rs
 	#
-	# def __getDay(self,day=1):
-	# 	'''
-	# 	获取时间段
-	# 	:param day:
-	# 	:return:
-	# 	'''
-	# 	if not isinstance(day,int):
-	# 		raise "TypeError day must be intter!"
-	# 	return [(datetime.datetime.now() - datetime.timedelta(days=int("%s" % day))).strftime('%Y-%m-%d %H:%M:%S'),datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')]
-	#
-	#
-	# def FromItemidGetAlertHistory(self,itemid,timestamp=2):
-	# 	being_time = self.__getDay(timestamp)[0]
-	#
-	# 	sql = "select events.clock,events.acknowledged,events.eventid,events.value " \
-	# 	      "from alerts INNER JOIN events ON alerts.eventid = events.eventid " \
-	# 	      "inner join functions on functions.triggerid = events.objectid " \
-	# 	      "where  functions.itemid=%s " \
-	# 	      "AND events.clock > UNIX_TIMESTAMP('%s') " \
-	# 	      "GROUP BY events.eventid " \
-	# 	      "ORDER BY events.clock " \
-	# 	      "DESC"  % (itemid,being_time)
-	# 	rs = self.execute_sql(sql)
-	# 	return rs
+	def __getDay(self,day=1):
+		'''
+		获取时间段
+		:param day:
+		:return:
+		'''
+		if not isinstance(day,int):
+			raise "TypeError day must be intter!"
+		return [(datetime.datetime.now() - datetime.timedelta(days=int("%s" % day))).strftime('%Y-%m-%d %H:%M:%S'),datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')]
+
+
+	def FromItemidGetAlertHistory(self,itemid,timestamp=7):
+		being_time = self.__getDay(timestamp)[0]
+		print(being_time)
+
+		sql = "select events.clock,events.acknowledged,events.eventid,events.value " \
+		      "from alerts INNER JOIN events ON alerts.eventid = events.eventid " \
+		      "inner join functions on functions.triggerid = events.objectid " \
+		      "where  functions.itemid=%s " \
+		      "AND events.clock > UNIX_TIMESTAMP('%s') " \
+		      "GROUP BY events.eventid " \
+		      "ORDER BY events.clock " \
+		      "DESC"  % (itemid,being_time)
+		rs = self.execute_sql(sql)
+		return rs
 	#
 	# def GetAlertMsg(self,itemid=None,eventid=None):
 	# 	if eventid:

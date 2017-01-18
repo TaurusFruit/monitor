@@ -20,17 +20,29 @@ def AlertDetail(request,event_id,time_stm):
 	:param time_stm: 时间戳
 	:return 返回报警详情页
 	'''
-	#项目ID
-	# item_id = DBMod.FromEventidGetItemid(event_id)
 
 	#数据库连接方法
 	dbconn = DBMod()
+	#项目ID
+	item_id = dbconn.FromEventidGetItemid(event_id)
+	print(item_id)
 
 	#当前报警信息
 	current_alert_info = CurrentAlertInfo(event_id,dbconn)
+	history_alert_info = HistoryAlertInfo(item_id,dbconn)
 
 	return render(request, 'zabbix/alert_info.html', {'current_info':current_alert_info})
 
+def HistoryAlertInfo(item_id,dbconn):
+	'''
+	获取当前项目历史报警记录
+	:param item_id: 项目ID
+	:param dbconn: 数据库连接方法
+	:return:
+	'''
+
+	history = dbconn.FromItemidGetAlertHistory(item_id)
+	print(history)
 
 def CurrentAlertInfo(event_id,dbconn,time_stm=None):
 	'''
@@ -45,9 +57,19 @@ def CurrentAlertInfo(event_id,dbconn,time_stm=None):
 
 
 	#获取事件报警信息
-	alert_msg = dbconn.GetAlertInfo(event_id)
+	'''
+	正确返回格式: alert_msg_info = (时间,信息内容)
+	'''
+	alert_msg_info = dbconn.GetAlertInfo(event_id)
+
 	#如果获取错误返回-1
-	if not alert_msg: return -1
+	if alert_msg_info == -1:
+		return -1
+
+	#配置图片时间
+	current_alert_info['img_time'] = alert_msg_info[1]
+	alert_msg = alert_msg_info[0]
+
 	#格式化报警信息
 	alert_msg = alert_msg.replace('\r','').replace('\\r\\n','\n').replace('：',':').split('\n')
 	alert_msg.pop(0)
@@ -59,9 +81,9 @@ def CurrentAlertInfo(event_id,dbconn,time_stm=None):
 
 	#获取事件知悉情况
 	ack_msg = dbconn.GetEventAcknow(event_id)
-	#配置图片时间
-	current_alert_info['img_time'] = ack_msg[0]
+
 	#判断是否知悉
+	#如果ack_msg == -1 表示未知晓
 	if ack_msg == -1:
 		current_alert_info['acknowleged'] = 0
 	else:
@@ -77,6 +99,13 @@ def CurrentAlertInfo(event_id,dbconn,time_stm=None):
 	return current_alert_info
 
 def img(request,stime,itemid):
+	'''
+	显示图片信息
+	:param request:
+	:param stime: 时间戳
+	:param itemid: 项目ID
+	:return:
+	'''
 	gf = Base()
 	user = gf.GetConf('zabbix','user')
 	pwd = gf.GetConf('zabbix','pwd')
