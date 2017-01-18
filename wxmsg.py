@@ -20,4 +20,5 @@ if __name__ == '__main__':
 	# wechat = WXAlert(toparty,content)
 	# wechat.sendMsg()
 	d = DBMod()
-	print(d.FromEventidGetItemid(489377))
+	print(d.FromEventidGetItemid(540871))
+	print(d.GetAlertMsg(itemid=25053))

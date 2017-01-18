@@ -51,7 +51,7 @@ $(function () {
                 type: 'primary',
                 onClick: function (){
                     var urls = window.location.href;
-                    eventid = urls.split('/')[6];
+                    eventid = urls.split('/')[5];
                     var zurl = "/wx_api/acknowlege.html?eventid="+eventid+"&msg="+confirm_msg;
                     var xmlhttp = new XMLHttpRequest();
                     xmlhttp.open('GET',zurl,true);

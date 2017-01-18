@@ -55,16 +55,17 @@
             </header>
 
             {% if current_info.status == 1 %}
-              <div  id="zabbix_img",class="zabbix_img" style="display: none">
+                <div  id="zabbix_img",class="zabbix_img" style="display: none">
                     <img  src="{% url 'zabbix.views.img'  stime=current_info.img_time itemid=current_info.itemid %}" />
                 </div>
+
                 <table class="msg_info" id="msg_info">
                     <tr>
                         <th>项目名称</th>
                         <th>{{ current_info.trigger_state }}</th>
                     </tr>
 
-                    {% for each in current_info.alert_info %}
+                    {% for each in current_info.alert_info.msg %}
                         <tr>
                             <td>{{ each.0 }}</td>
                             <td>{{ each.1 }}</td>
@@ -81,9 +82,8 @@
                     </div>
                 </div>
 
-                {% if current_info.acknowleged == 0 %}
+                {% if current_info.acknowleged == '0' %}
                     <div class="weui_cells_title">知悉内容</div>
-
 <div class="weui_cells weui_cells_form">
     <div class="weui_cell">
         <div class="weui_cell_bd weui_cell_primary">
@@ -107,7 +107,7 @@
                                 <th>确认时间</th>
                                 <th>确认信息</th>
                             </tr>
-                                                        <tr>
+                            <tr>
                                 {% for each in current_info.acknowleged %}
                                     <td>{{ each }}</td>
 
