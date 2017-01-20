@@ -9,7 +9,9 @@ urlpatterns = [
 	#知悉提交
 	url(r'^wx_api/acknowlege.html',views.SetAcknowlege),
 	#显示图片内容
-	url(r'^wx_api/img/(?P<stime>\d+)/(?P<itemid>\d+)',views.img)
+	url(r'^wx_api/img/(?P<stime>\d+)/(?P<itemid>\d+)',views.img),
+	#显示主机图片内容
+	url(r'^wx_api/img/(?P<graphid>\d+)',views.img)
 	# url(r'^wx_api/img/(?P<stime>\d+)/(?P<itemid>\d+)',views.img),
 	# url(r'^wx_api/cacti_graf',views.cacti_graf),
 ]

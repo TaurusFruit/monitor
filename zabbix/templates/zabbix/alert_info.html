@@ -136,31 +136,31 @@
 
                 <div class="weui_cells weui_cells_access">
                     {% for each in history_info.his_detail %}
-                        {% if each.2 == 0 %}
+                        {% if each.1 == 0 %}
                             <div class="high-bg">
                         {% else %}
                             <div class="normal-bg">
                         {% endif %}
-                    <a class="weui_cell"  href="{% url 'zabbix.views.Detail' item_id=history_info.item_id event_id=each.3 time_stm=each.1 %}">
+                    <a class="weui_cell"  href="{% url 'zabbix.views.AlertDetail' event_id=each.2 time_stm=each.0 %}">
 
 
-                        {% if each.2 == 0 %}
+                        {% if each.1 == 0 %}
                             <i class="weui_icon_warn"></i>
                             <div class="weui_cell_bd weui_cell_primary">
-                                <p>{{ each.0 }}(未知悉)</p>
+                                <p>{{ each.4 }}(未知悉)</p>
                             </div>
                         {% else %}
                             <i class="weui_icon_success"></i>
                             <div class="weui_cell_bd weui_cell_primary">
-                                <p>{{ each.0 }}(已知悉)</p>
+                                <p>{{ each.4 }}(已知悉)</p>
                             </div>
                         {% endif %}
 
 
-                        {% if each.4 == 0 %}
-                            <div style="color: #0bb20c" class="weui_cell_ft" >正常</div>
+                        {% if each.3 == 0 %}
+                            <div style="color: #0bb20c" class="weui_cell_ft" >恢复</div>
                         {% else %}
-                            <div style="color: #f43530" class="weui_cell_ft">问题</div>
+                            <div style="color: #f43530" class="weui_cell_ft">报警</div>
                         {% endif %}
                     </a>
                     </div>
@@ -236,7 +236,7 @@
                     </div>
                     -->
                     <p class="weui_tabbar_label">当前报警</p>
-                    {% if current_info.acknowleged == '0' %}
+                    {% if current_info.acknowleged == 0 %}
                         <p class="weui_tabbar_label" style="color: #f43530">(未知悉)</p>
 
                     {% else %}

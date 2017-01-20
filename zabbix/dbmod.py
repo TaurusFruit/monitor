@@ -58,18 +58,18 @@ class DBMod(Base):
 	# 	else:
 	# 		return -1
 	#
-	# def FromHostidGetGraphid(self,hostid):
-	# 	sql = "select graphs_items.graphid,items.key_ " \
-	# 	      "from hosts " \
-	# 	      "inner join items on items.hostid = hosts.hostid " \
-	# 	      "inner join graphs_items on graphs_items.itemid = items.itemid " \
-	# 	      "where hosts.hostid=%s " \
-	# 	      "and (items.key_ like 'net.if.in[eth%s]' " \
-	# 	      "or items.key_ like 'system.cpu.util%s') " \
-	# 	      "GROUP BY graphs_items.graphid" % (hostid,'%','%')
-	# 	rs = self.execute_sql(sql)
-	# 	return rs
-	#
+	def FromHostidGetGraphid(self,hostid):
+		sql = "select graphs_items.graphid,items.key_ " \
+		      "from hosts " \
+		      "inner join items on items.hostid = hosts.hostid " \
+		      "inner join graphs_items on graphs_items.itemid = items.itemid " \
+		      "where hosts.hostid=%s " \
+		      "and (items.key_ like 'net.if.in[eth%s]' " \
+		      "or items.key_ like 'system.cpu.util%s') " \
+		      "GROUP BY graphs_items.graphid" % (hostid,'%','%')
+		rs = self.execute_sql(sql)
+		return rs
+
 	def __getDay(self,day=1):
 		'''
 		获取时间段
@@ -82,8 +82,13 @@ class DBMod(Base):
 
 
 	def FromItemidGetAlertHistory(self,itemid,timestamp=7):
+		'''
+		通过项目ID获取项目历史记录
+		:param itemid: 项目ID
+		:param timestamp: 时间戳
+		:return: (时间,是否知悉,事件ID,事件值)
+		'''
 		being_time = self.__getDay(timestamp)[0]
-		print(being_time)
 
 		sql = "select events.clock,events.acknowledged,events.eventid,events.value " \
 		      "from alerts INNER JOIN events ON alerts.eventid = events.eventid " \
@@ -118,25 +123,30 @@ class DBMod(Base):
 	# 	rs = self.execute_sql(sql)
 	# 	return rs
 	#
-	# def FromItemidGetHost(self,itemid):
-	# 	sql = "SELECT hosts.hostid " \
-	# 	      "FROM items " \
-	# 	      "INNER JOIN hosts ON hosts.hostid = items.hostid " \
-	# 	      "where items.itemid=%s" % itemid
-	# 	rs = self.execute_sql(sql)
-	# 	return rs
-	#
-	# def FromHostidGetItems(self,hostid):
-	# 	sql = "SELECT triggers.description,items.itemid,triggers.value,max(events.eventid) " \
-	# 	      "FROM items " \
-	# 	      "INNER JOIN functions ON functions.itemid = items.itemid " \
-	# 	      "INNER JOIN triggers ON triggers.triggerid = functions.triggerid " \
-	# 	      "INNER JOIN events ON events.objectid = functions.triggerid " \
-	# 	      "WHERE items.hostid= %s " \
-	# 	      "AND triggers.status=0 " \
-	# 	      "GROUP BY triggers.description" % hostid
-	# 	rs = self.execute_sql(sql)
-	# 	return rs
+	def FromItemidGetHost(self,itemid):
+		sql = "SELECT hosts.hostid " \
+		      "FROM items " \
+		      "INNER JOIN hosts ON hosts.hostid = items.hostid " \
+		      "where items.itemid=%s" % itemid
+		rs = self.execute_sql(sql)
+		return rs
+
+	def FromHostidGetItems(self,hostid):
+		'''
+
+		:param hostid:
+		:return: [触发器名称,项目ID,触发器状态,最新事件ID]
+		'''
+		sql = "SELECT triggers.description,items.itemid,triggers.value,max(events.eventid) " \
+		      "FROM items " \
+		      "INNER JOIN functions ON functions.itemid = items.itemid " \
+		      "INNER JOIN triggers ON triggers.triggerid = functions.triggerid " \
+		      "INNER JOIN events ON events.objectid = functions.triggerid " \
+		      "WHERE items.hostid= %s " \
+		      "AND triggers.status=0 " \
+		      "GROUP BY triggers.description" % hostid
+		rs = self.execute_sql(sql)
+		return rs
 	#
 	def FromEventidGetItemid(self,event_id):
 		'''

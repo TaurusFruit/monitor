@@ -183,6 +183,7 @@
 
                     <div class="weui_cells weui_cells_access">
                         {% for each in hosttrigger_info.items %}
+
                             {% if each.2 == 1 %}
                                 <div class="high-bg">
                             {% else %}
@@ -190,6 +191,7 @@
                             {% endif %}
 
                             <div class="weui_cell_bd weui_cell_primary">
+
                                 <script>
                                     var items = "{{ each.0 }}";
                                     if(items.length > 30){
@@ -207,7 +209,7 @@
                                 <div class="weui_cell_ft" >正常</div>
                             {% endif %}
 
-                        </a>
+
                         </div>
                         {% endfor %}
 
@@ -218,12 +220,13 @@
                 <div class="weui_tab_bd_item">
 
                      <header class='demos-header'>
-                <h1 class="demos-title">主机图形</h1>
-            </header>
+                        <h1 class="demos-title">主机图形</h1>
+                    </header>
+
                     {% for each_graph in hosttrigger_info.graphs %}
+                        <img src="{% url 'zabbix.views.hostimg' graphid=each_graph %}" />
                     {% endfor %}
                 </div>
-
 
             </div>
 
@@ -237,6 +240,7 @@
                     -->
                     <p class="weui_tabbar_label">当前报警</p>
                     {% if current_info.acknowleged == '0' %}
+                        <p> {% current_info.acknowleged %}</p>
                         <p class="weui_tabbar_label" style="color: #f43530">(未知悉)</p>
 
                     {% else %}

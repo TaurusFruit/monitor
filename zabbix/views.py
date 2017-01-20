@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponse
 import requests
 import time
 import re
+import datetime
 from .base import Base
 from .dbmod import DBMod
 from .zabbix_api import ZabbixApi
@@ -25,13 +26,39 @@ def AlertDetail(request,event_id,time_stm):
 	dbconn = DBMod()
 	#项目ID
 	item_id = dbconn.FromEventidGetItemid(event_id)
-	print(item_id)
 
 	#当前报警信息
 	current_alert_info = CurrentAlertInfo(event_id,dbconn)
 	history_alert_info = HistoryAlertInfo(item_id,dbconn)
+	host_trigger_info = HostTriggerInfo(item_id,dbconn)
 
-	return render(request, 'zabbix/alert_info.html', {'current_info':current_alert_info})
+	return render(request, 'zabbix/alert_info.html', {'current_info':current_alert_info,
+	                                                  'history_info':history_alert_info,
+	                                                  'hosttrigger_info':host_trigger_info
+	                                                  }
+	              )
+def HostTriggerInfo(item_id,dbconn):
+	host_trigger_info = {}.fromkeys(['items'],0)
+	#获取主机ID
+	host_id = dbconn.FromItemidGetHost(item_id)[0][0]
+	#获取主机项目列表, [触发器名称,项目ID,触发器状态,最新事件ID]
+	item_list = dbconn.FromHostidGetItems(host_id)
+	onerr = 0
+	for each in item_list:
+		if each[2] == 1:
+			onerr +=1
+	host_trigger_info['onerr'] = onerr
+	host_trigger_info['items'] = item_list
+	#获取图形ID
+	graphs = dbconn.FromHostidGetGraphid(host_id)
+	host_trigger_info['graphs'] = []
+	for each in graphs:
+		host_trigger_info['graphs'].append(each[0])
+
+	print(host_trigger_info['graphs'])
+
+	return host_trigger_info
+
 
 def HistoryAlertInfo(item_id,dbconn):
 	'''
@@ -40,9 +67,24 @@ def HistoryAlertInfo(item_id,dbconn):
 	:param dbconn: 数据库连接方法
 	:return:
 	'''
+	item_history_info = {}.fromkeys(['item_id','his_detail'],0)
+	item_history_info['item_id'] = item_id
 
-	history = dbconn.FromItemidGetAlertHistory(item_id)
-	print(history)
+	#获取项目历史记录,返回 (时间,是否知悉,事件ID,报警类型)
+	history_detail = dbconn.FromItemidGetAlertHistory(item_id)
+	#item_history_info['his_detail'] 返回报警详细信息
+	#格式 [时间戳,是否知悉,事件ID,报警类型,可读时间]
+	item_history_info['his_detail'] = []
+	unknow = 0
+	for each in history_detail:
+		each = list(each)
+		if each[1] == 0:
+			unknow +=1
+		time_stm = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(int(each[0])))
+		each.append(time_stm)
+		item_history_info['his_detail'].append(each)
+	item_history_info['unknow'] = unknow
+	return  item_history_info
 
 def CurrentAlertInfo(event_id,dbconn,time_stm=None):
 	'''
@@ -87,6 +129,7 @@ def CurrentAlertInfo(event_id,dbconn,time_stm=None):
 	if ack_msg == -1:
 		current_alert_info['acknowleged'] = 0
 	else:
+		#ack_msg = [知悉时间,知悉内容]
 		ack_msg = list(ack_msg)
 		ack_msg[0] = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(int(ack_msg[0])))
 		current_alert_info['acknowleged'] = list(ack_msg)
@@ -97,6 +140,22 @@ def CurrentAlertInfo(event_id,dbconn,time_stm=None):
 	current_alert_info['itemid'] = dbconn.FromEventidGetItemid(event_id)
 
 	return current_alert_info
+
+def hostimg(request,graphid):
+	gf = Base()
+	stime = (datetime.datetime.now() - datetime.timedelta(days=7)).strftime('%Y%m%d%H%M%S')
+	curtime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+	user = gf.GetConf('zabbix','user')
+	pwd = gf.GetConf('zabbix','pwd')
+	homepage = gf.GetConf('zabbix','homepage')
+
+	url = "%s/chart2.php?graphid=%s&period=604800&stime=%s&" \
+	      "updateProfile=1&profileIdx=web.screens&" \
+	      "profileIdx2=1363&width=600&screenid=&curtime=%s" % (homepage,graphid,stime,curtime)
+	session = requests.Session()
+	session.post(homepage,data={'name':user,'password':pwd,'autologin':1,'enter':'Sign in'})
+	grf = session.get(url).content
+	return HttpResponse(grf,content_type='image/png')
 
 def img(request,stime,itemid):
 	'''
