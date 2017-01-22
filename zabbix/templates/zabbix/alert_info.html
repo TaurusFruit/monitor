@@ -224,6 +224,7 @@
                 <h1 class="demos-title">主机图形</h1>
             </header>
                     {% for each_graph in hosttrigger_info.graphs %}
+                        <img src="{% url 'hostimg' graphid=each_graph%}">
                     {% endfor %}
                 </div>
 

@@ -11,7 +11,7 @@ urlpatterns = [
 	#显示图片内容
 	url(r'^wx_api/img/(?P<stime>\d+)/(?P<itemid>\d+)',views.img,name='img'),
 	#显示主机图片内容
-	url(r'^wx_api/hostimg/(?P<graphid>\d+)',views.img),
+	url(r'^wx_api/hostimg/(?P<graphid>\d+)',views.hostimg,name='hostimg'),
 
 	# url(r'^wx_api/img/(?P<stime>\d+)/(?P<itemid>\d+)',views.img),
 	url(r'^wx_api/cacti_graf',views.cacti_graf),
