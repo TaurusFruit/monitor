@@ -157,6 +157,26 @@ def hostimg(request,graphid):
 	grf = session.get(url).content
 	return HttpResponse(grf,content_type='image/png')
 
+def cacti_graf(request):
+	host = request.GET.get('host')
+	r_id = request.GET.get('r_id')
+	if not r_id:r_id=1
+	if host == 'linli':
+		url = "http://monitor.cnnix.cn/index.php"
+		user = "hzts"
+		pwd = "hzts"
+		img_url = "http://monitor.cnnix.cn/graph_image.php?action=view&local_graph_id=3169&rra_id=%s" % r_id
+	elif host == 'baoshun':
+		url = "http://123.59.7.152/cacti/index.php"
+		user = "zhangl"
+		pwd = "zhangl123456"
+		img_url = "http://123.59.7.152/cacti/graph_image.php?action=view&local_graph_id=3019&rra_id=%s" % r_id
+	data = {'action':'login','login_username':user,'login_password':pwd}
+	session = requests.Session()
+	session.post(url,data)
+	graf = session.get(img_url).content
+	return HttpResponse(graf,content_type="image/png")
+
 def img(request,stime,itemid):
 	'''
 	显示图片信息

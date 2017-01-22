@@ -183,12 +183,13 @@
 
                     <div class="weui_cells weui_cells_access">
                         {% for each in hosttrigger_info.items %}
+
                             {% if each.2 == 1 %}
                                 <div class="high-bg">
                             {% else %}
                                 <div class="normal-bg">
                             {% endif %}
-
+                            <a class="weui_cell" href="{% url 'alertdetail' event_id=each.3 %}">
                             <div class="weui_cell_bd weui_cell_primary">
                                 <script>
                                     var items = "{{ each.0 }}";
@@ -206,12 +207,14 @@
                             {% else %}
                                 <div class="weui_cell_ft" >正常</div>
                             {% endif %}
+                            </a>
+                            </div>
 
-                        </a>
-                        </div>
                         {% endfor %}
-
                         </div>
+
+
+
                     </div>
                 </div>
 

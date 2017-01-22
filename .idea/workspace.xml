@@ -43,8 +43,8 @@
           <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/zabbix/views.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.4520548">
-                  <caret line="117" column="4" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="4" />
+                <state vertical-scroll-proportion="0.55479455">
+                  <caret line="49" column="38" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
                   <folding>
                     <element signature="e#0#48#0" expanded="true" />
                   </folding>
@@ -125,16 +125,6 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/zabbix/urls.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="7" column="105" selection-start-line="7" selection-start-column="105" selection-end-line="7" selection-end-column="105" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="dbmod.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/zabbix/dbmod.py">
               <provider selected="true" editor-type-id="text-editor">
@@ -158,21 +148,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="alert_info_old.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/zabbix/templates/zabbix/alert_info_old.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="308" column="0" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="alert_info.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/zabbix/templates/zabbix/alert_info.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.26024362">
-                  <caret line="143" column="67" selection-start-line="143" selection-start-column="67" selection-end-line="143" selection-end-column="67" />
+                <state vertical-scroll-proportion="0.551495">
+                  <caret line="193" column="40" selection-start-line="193" selection-start-column="40" selection-end-line="193" selection-end-column="40" />
                   <folding />
                 </state>
               </provider>
@@ -218,11 +198,11 @@
         <option value="$PROJECT_DIR$/zabbix/templates/zabbix/alert_info_old.html" />
         <option value="$PROJECT_DIR$/wxmsg.py" />
         <option value="$PROJECT_DIR$/zabbix/grafget.py" />
-        <option value="$PROJECT_DIR$/zabbix/views.py" />
         <option value="$PROJECT_DIR$/zabbix/wxalert.py" />
         <option value="$PROJECT_DIR$/zabbix/base.py" />
         <option value="$PROJECT_DIR$/zabbix/conf.ini" />
         <option value="$PROJECT_DIR$/uwsgi.sh" />
+        <option value="$PROJECT_DIR$/zabbix/views.py" />
         <option value="$PROJECT_DIR$/zabbix/urls.py" />
         <option value="$PROJECT_DIR$/zabbix/templates/zabbix/alert_info.html" />
       </list>
@@ -813,14 +793,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zabbix/templates/zabbix/alert_info_old.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zabbix/templates/zabbix/alert_info.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -896,14 +868,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zabbix/templates/zabbix/alert_info_old.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="2" selection-start-line="57" selection-start-column="2" selection-end-line="59" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zabbix/templates/zabbix/alert_info.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -916,14 +880,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="53" column="47" selection-start-line="53" selection-start-column="47" selection-end-line="53" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zabbix/templates/zabbix/alert_info_old.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -942,13 +898,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zabbix/templates/zabbix/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1106,27 +1055,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zabbix/dbmod.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
-          <folding>
-            <element signature="e#92#106#0" expanded="true" />
-            <marker date="1484904716000" expanded="true" signature="645:842" placeholder="SELECT alert..alerts..." />
-            <marker date="1484904716000" expanded="true" signature="989:1109" placeholder="SELECT ackno..acknowledges..." />
-            <marker date="1484904716000" expanded="true" signature="1260:1606" placeholder="SELECT ackno..events..." />
-            <marker date="1484904716000" expanded="true" signature="1763:2145" placeholder="select graph..hosts..." />
-            <marker date="1484904716000" expanded="true" signature="2732:3135" placeholder="select event..alerts..." />
-            <marker date="1484904716000" expanded="true" signature="3283:3529" placeholder="select users..alerts..." />
-            <marker date="1484904716000" expanded="true" signature="3565:4025" placeholder="select users..alerts..." />
-            <marker date="1484904716000" expanded="true" signature="4133:4270" placeholder="SELECT hosts..items..." />
-            <marker date="1484904716000" expanded="true" signature="4439:4870" placeholder="SELECT trigg..items..." />
-            <marker date="1484904716000" expanded="true" signature="5037:5177" placeholder="SELECT funct..events..." />
-            <marker date="1484904716000" expanded="true" signature="5043:5177" placeholder="select funct..events..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zabbix/zabbix_api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1189,37 +1117,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zabbix/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4520548">
-          <caret line="117" column="4" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zabbix/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="105" selection-start-line="7" selection-start-column="105" selection-end-line="7" selection-end-column="105" />
+        <state vertical-scroll-proportion="0.19933555">
+          <caret line="13" column="55" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zabbix/templates/zabbix/alert_info_old.html">
+    <entry file="file://$PROJECT_DIR$/zabbix/dbmod.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="308" column="0" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
-          <folding />
+          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+          <folding>
+            <element signature="e#92#106#0" expanded="true" />
+            <marker date="1484904716000" expanded="true" signature="645:842" placeholder="SELECT alert..alerts..." />
+            <marker date="1484904716000" expanded="true" signature="989:1109" placeholder="SELECT ackno..acknowledges..." />
+            <marker date="1484904716000" expanded="true" signature="1260:1606" placeholder="SELECT ackno..events..." />
+            <marker date="1484904716000" expanded="true" signature="1763:2145" placeholder="select graph..hosts..." />
+            <marker date="1484904716000" expanded="true" signature="2732:3135" placeholder="select event..alerts..." />
+            <marker date="1484904716000" expanded="true" signature="3283:3529" placeholder="select users..alerts..." />
+            <marker date="1484904716000" expanded="true" signature="3565:4025" placeholder="select users..alerts..." />
+            <marker date="1484904716000" expanded="true" signature="4133:4270" placeholder="SELECT hosts..items..." />
+            <marker date="1484904716000" expanded="true" signature="4439:4870" placeholder="SELECT trigg..items..." />
+            <marker date="1484904716000" expanded="true" signature="5037:5177" placeholder="SELECT funct..events..." />
+            <marker date="1484904716000" expanded="true" signature="5043:5177" placeholder="select funct..events..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zabbix/templates/zabbix/alert_info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26024362">
-          <caret line="143" column="67" selection-start-line="143" selection-start-column="67" selection-end-line="143" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.551495">
+          <caret line="193" column="40" selection-start-line="193" selection-start-column="40" selection-end-line="193" selection-end-column="40" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zabbix/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55479455">
+          <caret line="49" column="38" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
