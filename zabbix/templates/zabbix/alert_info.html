@@ -56,7 +56,7 @@
 
             {% if current_info.status == 1 %}
               <div  id="zabbix_img",class="zabbix_img" style="display: none">
-                    <img  src="{% url 'zabbix.views.img'  stime=current_info.img_time itemid=current_info.itemid %}" />
+                    <img  src="{% url 'img'  stime=current_info.img_time itemid=current_info.itemid %}" />
                 </div>
                 <table class="msg_info" id="msg_info">
                     <tr>
@@ -141,7 +141,7 @@
                         {% else %}
                             <div class="normal-bg">
                         {% endif %}
-                    <a class="weui_cell"  href="{% url 'zabbix.views.AlertDetail' event_id=each.2 time_stm=each.0 %}">
+                    <a class="weui_cell"  href="{% url 'alertdetail' event_id=each.2 time_stm=each.0 %}">
 
 
                         {% if each.1 == 0 %}
