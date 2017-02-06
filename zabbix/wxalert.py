@@ -39,8 +39,17 @@ class WXAlert(SaveLog):
 
 		#获取事件ID
 		event_id = self.__contentPars
+		try:
+			img_time = dbconn.GetAlertInfo(event_id)
+			if img_time != -1:
+				img_time = img_time[1]
+		except:
+			img_time = ''
 
-		img_time = dbconn.GetAlertInfo(event_id)[1]
+		if "恢复" in content:
+			title = "恢复信息"
+		else:
+			title = "报警信息"
 
 		self.new_content = {
 			'toparty':toparty,
@@ -49,7 +58,7 @@ class WXAlert(SaveLog):
 			'news':{
 				'articles':[
 					{
-						'title':'您有新的报警',
+						'title':title,
 						'description':content,
 						'picurl':"%s/wx_api/img/%s/%s" % (self.GetConf('zabbix','homepage'),img_time,event_id),
 						'url':'%s/wx_api/alert_detail/%s/' % (self.GetConf('zabbix','homepage'),event_id)

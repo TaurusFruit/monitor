@@ -7,7 +7,7 @@ class Base(object):
 	基础类,获取配置信息
 	'''
 	def __init__(self):
-		self.conf_file = os.path.join(os.curdir,'zabbix/conf.ini')
+		self.conf_file = os.path.join("/Data/apps/zabbix3.2/webfile/mytest/monitor",'zabbix/conf.ini')
 		self.config = cf.ConfigParser()
 		self.config.read(self.conf_file)
 
