@@ -17,5 +17,5 @@ urlpatterns = [
 	url(r'^wx_api/cacti_graf',views.cacti_graf),
 
 	#微信api
-	url(r'^wx_api/api.py',views.wxapi),
+	url(r'^wx_api/api.py',views.wx_api),
 ]
