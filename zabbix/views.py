@@ -207,3 +207,6 @@ def SetAcknowlege(request):
 	confirm_msg = request.GET.get('msg')
 	zabbix_api.acknow(event_id,confirm_msg)
 	return HttpResponse('ok')
+
+def wxapi(request):
+	return HttpResponse('ok')

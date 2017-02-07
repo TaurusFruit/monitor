@@ -46,6 +46,8 @@ class WXAlert(SaveLog):
 		except:
 			img_time = ''
 
+		item_id = dbconn.FromEventidGetItemid(event_id)
+
 		if "恢复" in content:
 			title = "恢复信息"
 		else:
@@ -60,7 +62,7 @@ class WXAlert(SaveLog):
 					{
 						'title':title,
 						'description':content,
-						'picurl':"%s/wx_api/img/%s/%s" % (self.GetConf('zabbix','homepage'),img_time,event_id),
+						'picurl':"%s/wx_api/img/%s/%s" % (self.GetConf('zabbix','homepage'),img_time,item_id),
 						'url':'%s/wx_api/alert_detail/%s/' % (self.GetConf('zabbix','homepage'),event_id)
 					},
 				]
