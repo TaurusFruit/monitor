@@ -5,7 +5,11 @@ import re
 import datetime
 from .base import Base
 from .dbmod import DBMod
+from .WXBizMsgCrypt import WXBizMsgCrypt
 from .zabbix_api import ZabbixApi
+from django.utils.encoding import smart_str
+import xml.etree.cElementTree as ET
+
 
 # Create your views here.
 
@@ -208,5 +212,76 @@ def SetAcknowlege(request):
 	zabbix_api.acknow(event_id,confirm_msg)
 	return HttpResponse('ok')
 
-def wxapi(request):
-	return HttpResponse('ok')
+def wx_api(request):
+	gf = Base()
+	# sToken = config.tokend_config['sToken']
+	sToken = gf.GetConf('tokend','stoken')
+	# sEncodingAESKey = config.tokend_config['sEncodingAESKey']
+	sEncodingAESKey = gf.GetConf('tokend','sencodingaeskey')
+	# sCorpID = config.tokend_config['corpid']
+	sCorpID = gf.GetConf('tokend','corpid')
+
+	wxcpt=WXBizMsgCrypt(sToken,sEncodingAESKey,sCorpID)
+
+	if request.method == 'GET':
+		return _wx_get(request,wxcpt)
+	elif request.method == 'POST':
+		return _wx_post(request,wxcpt)
+
+#GET数据
+def _wx_get(request,wxcpt):
+	msg_signature = request.GET.get('msg_signature')
+	timestamp = request.GET.get('timestamp')
+	nonce = request.GET.get('nonce')
+	echostr = request.GET.get('echostr')
+	ret,sEchoStr=wxcpt.VerifyURL(msg_signature, timestamp,nonce,echostr)
+	if(ret!=0):sEchoStr='Error'
+	return HttpResponse(sEchoStr)
+
+
+#POST数据，解密
+def _wx_post(request,wxcpt):
+	path = request.get_full_path()
+	sReqData = request.body
+	sReqMsgSig,sReqTimeStamp,sReqNonce = _path_pars(path)
+	ret,sMsg = wxcpt.DecryptMsg( sReqData, sReqMsgSig, sReqTimeStamp, sReqNonce)
+	if (ret!=0):
+		return HttpResponse('ERROR')
+	xml_tree = ET.fromstring(sMsg)
+	MsgType = xml_tree.find("MsgType").text
+
+	Msg_dick = _xml_pars(sMsg)
+
+	resp = ResDefine.ResPars(Msg_dick)
+	ResContent = resp.getRes
+	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
+	return HttpResponse(res)
+
+#获取url数据
+def _path_pars(path):
+	path_list = []
+	for each in path.split('?')[1].split('&'):
+		path_list.append(each.split('=')[1])
+	return path_list
+
+#测试分析xml
+def _xml_pars(content):
+	msg_xml = ET.fromstring(content)
+	msg = {}
+	for element in msg_xml:
+		msg[element.tag] = smart_str(element.text)
+	return msg
+
+
+#返回文字数据
+def ResData(wxcpt,ToUserName,FromUserName,CreateTime,Content,sReqNonce,sReqTimeStamp):
+	sRespData = "<xml>" \
+	            "<ToUserName><![CDATA[%s]]></ToUserName>" \
+	            "<FromUserName><![CDATA[%s]]></FromUserName>" \
+	            "<CreateTime>%s</CreateTime>" \
+	            "<MsgType><![CDATA[text]]></MsgType>" \
+	            "<Content><![CDATA[%s]]></Content></xml>" % (ToUserName,FromUserName,CreateTime,Content)
+	ret,sEncryptMsg=wxcpt.EncryptMsg(sRespData, sReqNonce)
+	if ret!=0:
+		return "ERROR"
+	return sEncryptMsg
