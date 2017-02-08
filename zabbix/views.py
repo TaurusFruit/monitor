@@ -214,6 +214,7 @@ def SetAcknowlege(request):
 	zabbix_api.acknow(event_id,confirm_msg)
 	return HttpResponse('ok')
 
+@csrf_exempt
 def wx_api(request):
 	gf = Base()
 	# sToken = config.tokend_config['sToken']
