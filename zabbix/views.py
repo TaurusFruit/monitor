@@ -262,7 +262,8 @@ def _wx_post(request,wxcpt):
 	print(MsgType)
 
 	Msg_dick = _xml_pars(sMsg)
-	return ('OK')
+	print(Msg_dick)
+	return "ok"
 	# res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
 	# return HttpResponse(res)
 
