@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponse
 import requests
 import time
 import re
+from django.views.decorators.csrf import csrf_exempt
 import datetime
 from .base import Base
 from .dbmod import DBMod
