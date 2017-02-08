@@ -220,10 +220,21 @@ class WXBizMsgCrypt(object):
         self.token = sToken
         self.appid = sAppId
 
+    def VerifyURL(self, sMsgSignature, sTimeStamp, sNonce, sEchoStr):
+        sha1 = SHA1()
+        ret,signature = sha1.getSHA1(self.token, sTimeStamp, sNonce, sEchoStr)
+        if ret  != 0:
+            return ret, None
+        if not signature == sMsgSignature:
+            return ierror.WXBizMsgCrypt_ValidateSignature_Error, None
+        pc = Prpcrypt(self.key)
+        ret,sReplyEchoStr = pc.decrypt(sEchoStr,self.appid)
+        return ret,sReplyEchoStr
+
     def EncryptMsg(self, sReplyMsg, sNonce, timestamp = None):
         #将公众号回复用户的消息加密打包
         #@param sReplyMsg: 企业号待回复用户的消息，xml格式的字符串
-        #@param sTimeStamp: 时间戳，可以自己生成，也可以用URL参数的timestamp,如为None则自动用当前时间
+        #@param sTicorpsecretmeStamp: 时间戳，可以自己生成，也可以用URL参数的timestamp,如为None则自动用当前时间
         #@param sNonce: 随机串，可以自己生成，也可以用URL参数的nonce
         #sEncryptMsg: 加密后的可以直接回复用户的密文，包括msg_signature, timestamp, nonce, encrypt的xml格式的字符串,
         #return：成功0，sEncryptMsg,失败返回对应的错误码None

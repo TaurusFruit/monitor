@@ -225,8 +225,7 @@ def wx_api(request):
 
 	if request.method == 'GET':
 		return _wx_get(request,wxcpt)
-	elif request.method == 'POST':
-		return _wx_post(request,wxcpt)
+
 
 #GET数据
 def _wx_get(request,wxcpt):
@@ -234,28 +233,17 @@ def _wx_get(request,wxcpt):
 	timestamp = request.GET.get('timestamp')
 	nonce = request.GET.get('nonce')
 	echostr = request.GET.get('echostr')
+
 	ret,sEchoStr=wxcpt.VerifyURL(msg_signature, timestamp,nonce,echostr)
 	if(ret!=0):sEchoStr='Error'
 	return HttpResponse(sEchoStr)
 
-
-#POST数据，解密
-def _wx_post(request,wxcpt):
-	path = request.get_full_path()
-	sReqData = request.body
-	sReqMsgSig,sReqTimeStamp,sReqNonce = _path_pars(path)
-	ret,sMsg = wxcpt.DecryptMsg( sReqData, sReqMsgSig, sReqTimeStamp, sReqNonce)
-	if (ret!=0):
-		return HttpResponse('ERROR')
-	xml_tree = ET.fromstring(sMsg)
-	MsgType = xml_tree.find("MsgType").text
-
-	Msg_dick = _xml_pars(sMsg)
-
-	resp = ResDefine.ResPars(Msg_dick)
-	ResContent = resp.getRes
-	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
-	return HttpResponse(res)
+'''
+msg_signature=32694ff3c582763bb1ea6cefc96354fddc02f87e
+timestamp=1486517966
+nonce=1776134298
+echostr=BVn%2B%2B4l%2BwcLyyqijd4kgySyhvBQhNKEnF1MAGR0IFH1XudYZgbRAI72Ak9dy30k6zg7zBcVnE5MH8zWeKHAp%2Bg%3D%3D
+'''
 
 #获取url数据
 def _path_pars(path):
