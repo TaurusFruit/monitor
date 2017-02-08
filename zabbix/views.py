@@ -265,10 +265,11 @@ def _wx_post(request,wxcpt):
 	print(Msg_dick)
 
 	if MsgType == 'event':
-		if Msg_dick['EventKey'] == 'none':
-			ResContent = "探索传媒报警系统"
-		else:
-			ResContent = ''
+		if Msg_dick['Event'] == 'click':
+			if Msg_dick['EventKey'] == 'None':
+				ResContent = "探索传媒报警系统"
+			else:
+				ResContent = ''
 
 	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
 	return HttpResponse(res)
