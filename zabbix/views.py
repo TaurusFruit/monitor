@@ -3,6 +3,7 @@ import requests
 import time
 import re
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import requires_csrf_token
 import datetime
 from .base import Base
 from .dbmod import DBMod
@@ -241,6 +242,7 @@ def _wx_get(request,wxcpt):
 	return HttpResponse(sEchoStr)
 
 #POST数据，解密
+@csrf_exempt
 def _wx_post(request,wxcpt):
 	path = request.get_full_path()
 	sReqData = request.body
