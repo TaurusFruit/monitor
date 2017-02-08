@@ -267,20 +267,17 @@ def _wx_post(request,wxcpt):
 	ResContent = ''
 
 	if MsgType == 'event':
-		if Msg_dick['Event'] == 'enter_agent':
-			if Msg_dick['EventKey'] == 'None':
-				ResContent = "探索传媒报警系统"
+		if Msg_dick['Event'] == 'click':
+			if Msg_dick['EventKey'] == 'show_help':
+				ResContent = _show_help(Msg_dick['FromUserName'])
 
 	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
 	return HttpResponse(res)
 
 
-'''
-msg_signature=32694ff3c582763bb1ea6cefc96354fddc02f87e
-timestamp=1486517966
-nonce=1776134298
-echostr=BVn%2B%2B4l%2BwcLyyqijd4kgySyhvBQhNKEnF1MAGR0IFH1XudYZgbRAI72Ak9dy30k6zg7zBcVnE5MH8zWeKHAp%2Bg%3D%3D
-'''
+def _show_help(username):
+	msg = "%s 你好\n点击报警报警信息可进入报警详情页面\n在报警详情页面可以进行知悉事件操作\n" % username
+	return  msg
 
 #获取url数据
 def _path_pars(path):
