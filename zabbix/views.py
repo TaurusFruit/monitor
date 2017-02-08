@@ -246,9 +246,15 @@ def _wx_get(request,wxcpt):
 @csrf_exempt
 def _wx_post(request,wxcpt):
 	path = request.get_full_path()
+	print(path)
+
 	sReqData = request.body
+	print(sReqData)
+
 	sReqMsgSig,sReqTimeStamp,sReqNonce = _path_pars(path)
+
 	ret,sMsg=wxcpt.DecryptMsg( sReqData, sReqMsgSig, sReqTimeStamp, sReqNonce)
+	print(ret,sMsg)
 	if (ret!=0):
 		return HttpResponse('ERROR')
 	xml_tree = ET.fromstring(sMsg)
