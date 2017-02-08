@@ -264,12 +264,12 @@ def _wx_post(request,wxcpt):
 	Msg_dick = _xml_pars(sMsg)
 	print(Msg_dick)
 
+	ResContent = ''
+
 	if MsgType == 'event':
-		if Msg_dick['Event'] == 'click':
+		if Msg_dick['Event'] == 'enter_agent':
 			if Msg_dick['EventKey'] == 'None':
 				ResContent = "探索传媒报警系统"
-			else:
-				ResContent = ''
 
 	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
 	return HttpResponse(res)
