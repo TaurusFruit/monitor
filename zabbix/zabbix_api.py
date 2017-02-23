@@ -214,8 +214,9 @@ class ZabbixApi(Base):
 			eth1_traf = "%.2f %s" % (eth1_traf,unit[unit_tag])
 			host_eth1_detail.append((host_info[i[0]],eth1_traf))
 
+		res = " ".join([host_eth0_detail,host_eth1_detail])
 
-		return (host_eth0_detail,host_eth1_detail)
+		return res
 
 
 
