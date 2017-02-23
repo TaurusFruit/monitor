@@ -214,8 +214,11 @@ class ZabbixApi(Base):
 			eth1_traf = "%.2f %s" % (eth1_traf,unit[unit_tag])
 			host_eth1_detail.append((host_info[i[0]],eth1_traf))
 
-		res = " ".join([host_eth0_detail,host_eth1_detail])
-
+		res = ""
+		for each in range(len(host_eth1_detail)):
+			res += "%s:\teth0:%s\teth1:%s\n" % (host_eth1_detail[each][0],host_eth0_detail[each][1],host_eth1_detail[each][1])
+		# res = host_eth0_detail
+		#
 		return res
 
 
