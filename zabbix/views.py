@@ -11,7 +11,7 @@ from .WXBizMsgCrypt import WXBizMsgCrypt
 from .zabbix_api import ZabbixApi
 from django.utils.encoding import smart_str
 import xml.etree.cElementTree as ET
-
+from . import contect
 
 # Create your views here.
 
@@ -268,7 +268,7 @@ def _wx_post(request,wxcpt):
 
 	if MsgType == 'event':
 		if Msg_dick['Event'] == 'click':
-			if Msg_dick['EventKey'] == 'show_help':
+			if Msg_dick['EventKey'] == 'help':
 				ResContent = _show_help(Msg_dick['FromUserName'])
 
 	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
@@ -276,7 +276,7 @@ def _wx_post(request,wxcpt):
 
 
 def _show_help(username):
-	msg = "%s 你好\n点击报警报警信息可进入报警详情页面\n在报警详情页面可以进行知悉事件操作\n" % username
+	msg = "%s 你好\n点击报警报警信息可进入报警详情页面\n在报警详情页面可以进行知悉事件操作\n" % contect.User[username]
 	return  msg
 
 #获取url数据
