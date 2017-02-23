@@ -271,7 +271,7 @@ def _wx_post(request,wxcpt):
 			if Msg_dick['EventKey'] == 'show_help':
 				ResContent = _show_help(Msg_dick['FromUserName'])
 			elif Msg_dick['EventKey'] == 'traf_dsp':
-				ResContent = _show_traf(Msg_dick,'DSP')
+				ResContent = _show_traf('DSP')
 
 	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
 	return HttpResponse(res)
