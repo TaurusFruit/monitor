@@ -13,8 +13,8 @@ from zabbix.contect import *
 if __name__ == '__main__':
         z = ZabbixApi()
         # ah = z.getAllGroup()
-        d = DBMod()
-        a = getUserGroup('yangyy')
+        dbmode = DBMod()
+        a = dbmode.FromGroupidGetHostLoadid('SSP')
         print(a)
         # z.getGroupAvgTraff(grp_name,'out')
 

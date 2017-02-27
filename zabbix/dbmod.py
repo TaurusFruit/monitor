@@ -70,6 +70,38 @@ class DBMod(Base):
 		rs = self.execute_sql(sql)
 		return rs
 
+	def FromGroupidGetHostLoadid(self,groupname):
+		'''
+		获取主机组中所有主机的负载ID
+		:param groupname:
+		:return:
+		'''
+		host_load_dick = {}
+
+		#获取主机组中主机信息
+		get_group_host_sql = "SELECT hosts_groups.hostid , hosts.name " \
+		                     "FROM hosts_groups " \
+		                     "INNER JOIN groups ON hosts_groups.groupid = groups.groupid " \
+		                     "INNER JOIN hosts ON hosts_groups.hostid = hosts.hostid " \
+		                     "WHERE groups.name LIKE '%s'" % groupname
+		host_ids = self.execute_sql(get_group_host_sql)
+
+		#获取主机负载ID
+		for each_host_id in host_ids:
+			get_host_load_sql = "SELECT graphs_items.graphid ,items.key_ " \
+								"FROM hosts " \
+								"INNER JOIN items ON items.hostid = hosts.hostid " \
+								"INNER JOIN graphs_items ON graphs_items.itemid = items.itemid " \
+								"WHERE hosts.hostid = %s " \
+								"AND items.key_ LIKE 'system.cpu.load[all,avg15]' " \
+								"GROUP BY graphs_items.graphid" % (each_host_id[0])
+			load_ids = self.execute_sql(get_host_load_sql)
+			if len(load_ids) > 0:
+				host_load_dick[each_host_id[1]] = load_ids[0][0]
+
+		return host_load_dick
+
+
 	def FromGroupidGetHostEthid(self,groupname):
 		'''
 		获取主机组中所有主机的网卡ID

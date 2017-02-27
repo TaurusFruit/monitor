@@ -55,6 +55,18 @@ def HostNewrok(request,group_name,eth_id):
 	host_eth_ids = dbconn.FromGroupidGetHostEthid(group_name)
 	return render(request,'zabbix/host_network.html',{'host_eth_id':host_eth_ids,'eth_id':eth_id})
 
+def HostLoad(request,group_name):
+	'''
+	通过主机组名获取主机负载图
+	:param request:
+	:param group_name:
+	:return:
+	'''
+	dbconn = DBMod()
+	host_load_ids = dbconn.FromGroupidGetHostLoadid(group_name)
+	return render(request,'zabbix/host_load.html',{'host_load_id':host_load_ids})
+
+
 
 def HostTriggerInfo(item_id,dbconn):
 	host_trigger_info = {}.fromkeys(['items'],0)
@@ -283,14 +295,20 @@ def _wx_post(request,wxcpt):
 		if Msg_dick['Event'] == 'click':#
 			if Msg_dick['EventKey'] == 'show_help':
 				ResContent = _show_help(Msg_dick['FromUserName'])
-			elif 'traf' in Msg_dick['EventKey'] :
+			elif 'traf' in Msg_dick['EventKey'] or 'load' in Msg_dick['EventKey'] :
+				if 'traf' in Msg_dick['EventKey'] :
+					tag = 'traf'
+				elif 'load' in Msg_dick['EventKey'] :
+					tag = 'load'
+
 				group_name = Msg_dick['EventKey'].split('_')[1]
-				ResContent = _show_traf(Msg_dick['FromUserName'],group_name)
+				ResContent = _show_group_graf(Msg_dick['FromUserName'],group_name,tag)
+
 
 	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
 	return HttpResponse(res)
 
-def _show_traf(username,groupname):
+def _show_group_graf(username,groupname,tag):
 	'''
 	获取流量图信息
 	:param username:
@@ -304,9 +322,11 @@ def _show_traf(username,groupname):
 		return "您好,你还没有相关权限,请联系管理员."
 	if groupname not in contect_info and 'admin' not in contect_info:
 		return "%s 你好,你没有查看 %s 组 权限,请联系管理员" % (real_name,groupname)
-
-	msg = "%s 你好,查看 %s 主机组流量图请点击: <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a>" \
+	if tag == 'traf':
+		msg = "%s 你好,查看 %s 主机组流量图请点击: <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a>" \
 	      "查看<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/0'>eth0</a>" % (real_name,groupname,groupname,groupname)
+	elif tag == 'load':
+		msg = "%s 你好,查看 %s 主机负载图请点击: <a href='http://zabbix.tansuotv.cn/wx_api/load/%s'>点击</a>" (real_name,groupname,groupname)
 
 	return msg
 

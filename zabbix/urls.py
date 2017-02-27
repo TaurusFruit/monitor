@@ -15,6 +15,7 @@ urlpatterns = [
 
 	#显示主机组流量图
 	url(r'^wx_api/network/(?P<group_name>\w+)/(?P<eth_id>\d)$',views.HostNewrok,name='hostnework'),
+	url(r'^wx_api/load/(?P<group_name>\w+)$',views.HostLoad,name='hostload'),
 
 	# url(r'^wx_api/img/(?P<stime>\d+)/(?P<itemid>\d+)',views.img),
 	url(r'^wx_api/cacti_graf',views.cacti_graf),

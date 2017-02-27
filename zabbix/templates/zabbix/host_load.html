@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主机组流量图汇总</title>
+</head>
+<body>
+
+                <div class="weui_tab_bd_item">
+
+                     <header class='demos-header'>
+                <h1 class="demos-title">主机图形</h1>
+            </header>
+                    {% for each_host,load_info in host_load_id.items %}
+                        {{ each_host }}
+                        <br>
+                        <img src="{% url 'hostimg' graphid=load_info %}">
+                        <br><br>
+                    {% endfor %}
+                </div>
+
+</body>
+</html>
