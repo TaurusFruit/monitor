@@ -297,12 +297,12 @@ def _show_traf(username,groupname):
 	:return:
 	'''
 	contect_info = contect.getUserGroup(username)
-	if username in contect.User.keys():
+	if username in contect.User.keys() :
 		real_name = contect.User[username]
 	else:
 		return "您好,你还没有相关权限,请联系管理员."
 
-	if groupname not in contect_info:
+	if groupname not in contect_info or 'admin' not in contect_info:
 		return "%s 你好,你没有查看 %s 组 权限,请联系管理员" % (real_name,groupname)
 
 	msg = "%s 你好,查看<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a>" \
