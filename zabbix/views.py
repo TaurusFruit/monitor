@@ -305,8 +305,8 @@ def _show_traf(username,groupname):
 	if groupname not in contect_info and 'admin' not in contect_info:
 		return "%s 你好,你没有查看 %s 组 权限,请联系管理员" % (real_name,groupname)
 
-	msg = "%s 你好,查看<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a>" \
-	      "查看<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/0'>eth0</a>" % (real_name,groupname,groupname)
+	msg = "%s 你好,查看 %s 主机组流量图请点击: <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a>" \
+	      "查看<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/0'>eth0</a>" % (real_name,groupname,groupname,groupname)
 
 	return msg
 
