@@ -326,7 +326,7 @@ def _show_group_graf(username,groupname,tag):
 		msg = "%s 你好,查看 %s 主机组流量图请点击: <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a>" \
 	      "查看<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/0'>eth0</a>" % (real_name,groupname,groupname,groupname)
 	elif tag == 'load':
-		msg = "%s 你好,查看 %s 主机负载图请点击: <a href='http://zabbix.tansuotv.cn/wx_api/load/%s'>点击</a>" (real_name,groupname,groupname)
+		msg = "%s 你好,查看 %s 主机负载图请点击: <a href='http://zabbix.tansuotv.cn/wx_api/load/%s'>点击</a>" % (real_name,groupname,groupname)
 
 	return msg
 
