@@ -301,7 +301,7 @@ def _show_traf(username,groupname):
 		real_name = contect.User[username]
 	else:
 		return "您好,你还没有相关权限,请联系管理员."
-
+	print(contect_info)
 	if groupname not in contect_info or 'admin' not in contect_info:
 		return "%s 你好,你没有查看 %s 组 权限,请联系管理员" % (real_name,groupname)
 
