@@ -141,6 +141,16 @@ class ZabbixApi(Base):
 		res = self.__RequestPost(item_history_data)
 		return  res
 
+	def getGroupTraffID(self,group_name,flag):
+		'''
+		获取主机组中主机网卡item ID
+		:param group_name:
+		:param flag:
+		:return:
+		'''
+		pass
+
+
 
 	def getGroupAvgTraff(self,group_name,flag):
 		'''
@@ -159,75 +169,80 @@ class ZabbixApi(Base):
 		for each in host_of_group:
 			host_info[each['hostid']] = each['name']
 
+		print(host_info)
+
+		for each in host_info.keys():
+			item_ids = self.getHostNetItemid(each,flag)
+			print(item_ids)
 
 		#获取主机对应item id 历史记录
 		host_net_itemid_info = {}
 		host_eth0_info = {}
 		host_eth1_info = {}
-		for each in host_info.keys():
-			item_ids = self.getHostNetItemid(each,flag)
-			try:
-				eth0_id = item_ids[0]['itemid']
-				eth1_id = item_ids[1]['itemid']
-			except:
-				return 0
-			eth0_his = self.getItemHistory(eth0_id)
-			eth1_his = self.getItemHistory(eth1_id)
-			eth0_totle = 0
-			num = 0
-			for i in eth0_his:
-				eth0_totle += int(i['value'])
-				num += 1.0
-			eth0_avg = int(eth0_totle/num)
-
-			eth1_totle = 0
-			num = 0
-			for i in eth1_his:
-				eth1_totle+= int(i['value'])
-				num += 1.0
-			eth1_avg = int(eth1_totle/num)
-			host_eth0_info[each] = eth0_avg
-			host_eth1_info[each] = eth1_avg
-
-		host_eth0_info = sorted(host_eth0_info.items(),key=lambda x:x[1],reverse=True)
-		host_eth1_info = sorted(host_eth1_info.items(),key=lambda x:x[1],reverse=True)
-		host_eth0_detail = []
-		host_eth1_detail = []
-
-		for i in host_eth0_info:
-			unit = ['b','kb','mb','gb']
-			unit_tag = 0
-			eth0_traf = i[1]
-			while eth0_traf > 1024:
-				eth0_traf /= 1024
-				unit_tag += 1
-			eth0_traf = "%.2f %s" % (eth0_traf,unit[unit_tag])
-			host_eth0_detail.append((host_info[i[0]],eth0_traf))
-
-		for i in host_eth1_info:
-			unit = ['b','kb','mb','gb']
-			unit_tag = 0
-			eth1_traf = i[1]
-			while eth1_traf > 1024:
-				eth1_traf /= 1024
-				unit_tag += 1
-			eth1_traf = "%.2f %s" % (eth1_traf,unit[unit_tag])
-			host_eth1_detail.append((host_info[i[0]],eth1_traf))
-
-		res = ""
-		for each in range(len(host_eth1_detail)):
-			res += "%s:\teth0:%s\teth1:%s\n" % (host_eth1_detail[each][0],host_eth0_detail[each][1],host_eth1_detail[each][1])
-		# res = host_eth0_detail
+		# for each in host_info.keys():
+		# 	item_ids = self.getHostNetItemid(each,flag)
+		# 	try:
+		# 		eth0_id = item_ids[0]['itemid']
+		# 		eth1_id = item_ids[1]['itemid']
+		# 	except:
+		# 		return 0
+		# 	eth0_his = self.getItemHistory(eth0_id)
+		# 	eth1_his = self.getItemHistory(eth1_id)
+		# 	eth0_totle = 0
+		# 	num = 0
+		# 	for i in eth0_his:
+		# 		eth0_totle += int(i['value'])
+		# 		num += 1.0
+		# 	eth0_avg = int(eth0_totle/num)
 		#
-		return res
-
-
-
-		# eth0_traff_info  = sorted(host_eth0_info.items(),key=lambda d:d[0],reversed=True)
-
-		# print(eth0_traff_info)
-
-		#返回两个字典,分别是eth0,eth1的值
+		# 	eth1_totle = 0
+		# 	num = 0
+		# 	for i in eth1_his:
+		# 		eth1_totle+= int(i['value'])
+		# 		num += 1.0
+		# 	eth1_avg = int(eth1_totle/num)
+		# 	host_eth0_info[each] = eth0_avg
+		# 	host_eth1_info[each] = eth1_avg
+		#
+		# host_eth0_info = sorted(host_eth0_info.items(),key=lambda x:x[1],reverse=True)
+		# host_eth1_info = sorted(host_eth1_info.items(),key=lambda x:x[1],reverse=True)
+		# host_eth0_detail = []
+		# host_eth1_detail = []
+		#
+		# for i in host_eth0_info:
+		# 	unit = ['b','kb','mb','gb']
+		# 	unit_tag = 0
+		# 	eth0_traf = i[1]
+		# 	while eth0_traf > 1024:
+		# 		eth0_traf /= 1024
+		# 		unit_tag += 1
+		# 	eth0_traf = "%.2f %s" % (eth0_traf,unit[unit_tag])
+		# 	host_eth0_detail.append((host_info[i[0]],eth0_traf))
+		#
+		# for i in host_eth1_info:
+		# 	unit = ['b','kb','mb','gb']
+		# 	unit_tag = 0
+		# 	eth1_traf = i[1]
+		# 	while eth1_traf > 1024:
+		# 		eth1_traf /= 1024
+		# 		unit_tag += 1
+		# 	eth1_traf = "%.2f %s" % (eth1_traf,unit[unit_tag])
+		# 	host_eth1_detail.append((host_info[i[0]],eth1_traf))
+		#
+		# res = ""
+		# for each in range(len(host_eth1_detail)):
+		# 	res += "%s:\teth0:%s\teth1:%s\n" % (host_eth1_detail[each][0],host_eth0_detail[each][1],host_eth1_detail[each][1])
+		# # res = host_eth0_detail
+		# #
+		# return res
+		#
+		#
+		#
+		# # eth0_traff_info  = sorted(host_eth0_info.items(),key=lambda d:d[0],reversed=True)
+		#
+		# # print(eth0_traff_info)
+		#
+		# #返回两个字典,分别是eth0,eth1的值
 
 
 

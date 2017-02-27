@@ -43,6 +43,19 @@ def AlertDetail(request,event_id,time_stm):
 	                                                  'hosttrigger_info':host_trigger_info
 	                                                  }
 	              )
+
+def HostNewrok(request,group_name,eth_id):
+	'''
+	通过主机组名获取主机流量图
+	:param request:
+	:param group_name:
+	:return:
+	'''
+	dbconn = DBMod()
+	host_eth_ids = dbconn.FromGroupidGetHostEthid(group_name)
+	return render(request,'zabbix/host_network.html',{'host_eth_id':host_eth_ids,'eth_id':eth_id})
+
+
 def HostTriggerInfo(item_id,dbconn):
 	host_trigger_info = {}.fromkeys(['items'],0)
 	#获取主机ID
@@ -271,17 +284,32 @@ def _wx_post(request,wxcpt):
 			if Msg_dick['EventKey'] == 'show_help':
 				ResContent = _show_help(Msg_dick['FromUserName'])
 			elif Msg_dick['EventKey'] == 'traf_dsp':
-				res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],"aaa",sReqNonce,sReqTimeStamp)
-				return HttpResponse(res)
-				print(_show_traf('DSP'))
-				ResContent = _show_traf('DSP')
+				ResContent = _show_traf(Msg_dick['FromUserName'],'DSP')
 
 	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
 	return HttpResponse(res)
 
-def _show_traf(groupname):
-	zabbix_api = ZabbixApi()
-	return zabbix_api.getGroupAvgTraff(groupname,'in')
+def _show_traf(username,groupname):
+	'''
+	获取流量图信息
+	:param username:
+	:param groupname:
+	:return:
+	'''
+	contect_info = contect.getUserGroup(username)
+	if username in contect.User.keys():
+		real_name = contect.User[username]
+	else:
+		return "您好,你还没有相关权限,请联系管理员."
+
+	if groupname not in contect_info:
+		return "%s 你好,你没有查看 %s 组 权限,请联系管理员" % (real_name,groupname)
+
+	msg = "%s 你好,查看<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a>" \
+	      "查看<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/0'>eth0</a>" % (real_name,groupname,groupname)
+
+	return msg
+
 
 def _show_help(username):
 	msg = "%s 你好\n点击报警报警信息可进入报警详情页面\n在报警详情页面可以进行知悉事件操作\n" % contect.User[username]

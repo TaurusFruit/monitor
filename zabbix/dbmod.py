@@ -70,6 +70,42 @@ class DBMod(Base):
 		rs = self.execute_sql(sql)
 		return rs
 
+	def FromGroupidGetHostEthid(self,groupname):
+		'''
+		获取主机组中所有主机的网卡ID
+		:param groupid:
+		:return: {host_name:{eth0:grpid,eth1:grpid}}
+		'''
+
+		host_eth_dick = {}
+
+		#获取主机组中主机信息
+		get_group_host_sql = "SELECT hosts_groups.hostid , hosts.name " \
+		                     "FROM hosts_groups " \
+		                     "INNER JOIN groups ON hosts_groups.groupid = groups.groupid " \
+		                     "INNER JOIN hosts ON hosts_groups.hostid = hosts.hostid " \
+		                     "WHERE groups.name LIKE '%s'" % groupname
+		host_ids = self.execute_sql(get_group_host_sql)
+
+		for each_host_id in host_ids:
+			#获取主机网卡ID
+			get_host_eth_sql = "SELECT graphs_items.graphid ,items.key_ " \
+								"FROM hosts " \
+								"INNER JOIN items ON items.hostid = hosts.hostid " \
+								"INNER JOIN graphs_items ON graphs_items.itemid = items.itemid " \
+								"WHERE hosts.hostid = %s " \
+								"AND items.key_ LIKE 'net.if.in[eth%s]' " \
+								"GROUP BY graphs_items.graphid" % (each_host_id[0],'%')
+			eth_ids = self.execute_sql(get_host_eth_sql)
+			if len(eth_ids) > 1:
+				host_eth_dick[each_host_id[1]] = {}
+				for eth_id in eth_ids:
+					if 'eth1' in eth_id[1]:
+						host_eth_dick[each_host_id[1]]['eth1'] = eth_id[0]
+					else:
+						host_eth_dick[each_host_id[1]]['eth0'] = eth_id[0]
+		return (host_eth_dick)
+
 	def __getDay(self,day=1):
 		'''
 		获取时间段

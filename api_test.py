@@ -8,12 +8,14 @@ import django
 django.setup()
 from zabbix.dbmod import DBMod
 from zabbix.zabbix_api import *
+from zabbix.contect import *
 
 if __name__ == '__main__':
         z = ZabbixApi()
         # ah = z.getAllGroup()
-        grp_name ='DSP'
-        print(z.getGroupAvgTraff(grp_name,'in'))
+        d = DBMod()
+        a = getUserGroup('yangyy')
+        print(a)
         # z.getGroupAvgTraff(grp_name,'out')
 
 
