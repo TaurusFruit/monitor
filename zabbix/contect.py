@@ -59,7 +59,6 @@ User = {
 	'jiaoguangliang':'闫涛',
 }
 
-
 def getUserGroup(username):
 	'''
 	获取用户信息

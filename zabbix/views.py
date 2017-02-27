@@ -283,8 +283,9 @@ def _wx_post(request,wxcpt):
 		if Msg_dick['Event'] == 'click':#
 			if Msg_dick['EventKey'] == 'show_help':
 				ResContent = _show_help(Msg_dick['FromUserName'])
-			elif Msg_dick['EventKey'] == 'traf_dsp':
-				ResContent = _show_traf(Msg_dick['FromUserName'],'DSP')
+			elif 'traf' in Msg_dick['EventKey'] :
+				group_name = Msg_dick['EventKey'].split('_')[1]
+				ResContent = _show_traf(Msg_dick['FromUserName'],group_name)
 
 	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
 	return HttpResponse(res)
