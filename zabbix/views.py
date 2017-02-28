@@ -332,7 +332,8 @@ def _show_group_graf(username,groupname,tag):
 
 
 def _show_help(username):
-	msg = "%s 你好\n点击报警报警信息可进入报警详情页面\n在报警详情页面可以进行知悉事件操作\n" % contect.User[username]
+	msg = "%s 你好\n点击报警报警信息可进入报警详情页面\n在报警详情页面可以进行知悉事件操作\n" \
+	      "通过点击组流量图或组负载图连接可查看该组流量图详情\n" % contect.User[username]
 	return  msg
 
 #获取url数据
