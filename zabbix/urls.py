@@ -18,7 +18,7 @@ urlpatterns = [
 	url(r'^wx_api/load/(?P<group_name>\w+)$',views.HostLoad,name='hostload'),
 
 	# url(r'^wx_api/img/(?P<stime>\d+)/(?P<itemid>\d+)',views.img),
-	url(r'^wx_api/cacti_graf',views.cacti_graf),
+	url(r'^wx_api/cacti_graph',views.cacti_graph),
 
 
 

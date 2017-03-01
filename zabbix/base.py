@@ -17,6 +17,9 @@ class Base(object):
 		return self.config.get(conf_name,keyword)
 
 class SaveLog(Base):
+	'''
+	存储日志
+	'''
 	def __init__(self):
 		super(SaveLog,self).__init__()
 		try:

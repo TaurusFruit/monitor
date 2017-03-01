@@ -188,7 +188,7 @@ def hostimg(request,graphid):
 	grf = session.get(url).content
 	return HttpResponse(grf,content_type='image/png')
 
-def cacti_graf(request):
+def cacti_graph(request):
 	host = request.GET.get('host')
 	r_id = request.GET.get('r_id')
 	if not r_id:r_id=1
@@ -205,8 +205,8 @@ def cacti_graf(request):
 	data = {'action':'login','login_username':user,'login_password':pwd}
 	session = requests.Session()
 	session.post(url,data)
-	graf = session.get(img_url).content
-	return HttpResponse(graf,content_type="image/png")
+	graph = session.get(img_url).content
+	return HttpResponse(graph,content_type="image/png")
 
 def img(request,stime,itemid):
 	'''
@@ -295,20 +295,42 @@ def _wx_post(request,wxcpt):
 		if Msg_dick['Event'] == 'click':#
 			if Msg_dick['EventKey'] == 'show_help':
 				ResContent = _show_help(Msg_dick['FromUserName'])
-			elif 'traf' in Msg_dick['EventKey'] or 'load' in Msg_dick['EventKey'] :
-				if 'traf' in Msg_dick['EventKey'] :
-					tag = 'traf'
-				elif 'load' in Msg_dick['EventKey'] :
-					tag = 'load'
-
-				group_name = Msg_dick['EventKey'].split('_')[1]
-				ResContent = _show_group_graf(Msg_dick['FromUserName'],group_name,tag)
+			elif Msg_dick['EventKey'] == 'show_graph':
+				ResContent = show_graph(Msg_dick['FromUserName'])
+			# elif 'traf' in Msg_dick['EventKey'] or 'load' in Msg_dick['EventKey'] :
+			# 	if 'traf' in Msg_dick['EventKey'] :
+			# 		tag = 'traf'
+			# 	elif 'load' in Msg_dick['EventKey'] :
+			# 		tag = 'load'
+			# 	group_name = Msg_dick['EventKey'].split('_')[1]
+			# 	ResContent = _show_group_graph(Msg_dick['FromUserName'],group_name,tag)
 
 
 	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
 	return HttpResponse(res)
 
-def _show_group_graf(username,groupname,tag):
+def show_graph(username):
+	'''
+	判断用户权限,获取图表连接
+	:param username:
+	:return:
+	'''
+	group_info = contect.getUserInfo(username)
+	print(group_info)
+	if username in contect.User.keys():
+		real_name = contect.User[username]
+	else:
+		return "您好,你还没有相关权限,请联系管理员."
+
+	prompt = "%s 你好,\n" \
+	         "你可查看的主机组有:\n" % real_name
+	for each in group_info:
+		prompt += "%-10s : <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a> <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/0'>eth0</a> " \
+		          "<a href='http://zabbix.tansuotv.cn/wx_api/load/%s'>负载</a>\n" % (each,each,each,each)
+	return prompt
+
+
+def _show_group_graph(username,groupname,tag):
 	'''
 	获取流量图信息
 	:param username:

@@ -22,6 +22,7 @@ Group = {
 		'name':'Hadoop',
 		'users':[
 			'lizhang',
+			'yangyy',
 		]
 	},
 	5:{
@@ -58,6 +59,25 @@ User = {
 	'zhuxs':'朱晓珊',
 	'jiaoguangliang':'闫涛',
 }
+
+def getUserInfo(username):
+	'''
+	获取用户组信息
+	:param username:
+	:return:
+	'''
+	groupinfo = []
+	#判断是否为管理员
+	if username in Group[2]['users']:
+		for k,v in Group.items():
+			if v['name'] != 'admin':
+				groupinfo.append(v['name'])
+	else:
+		for k,v in Group.items():
+			if username in v['users']:
+				groupinfo.append(v['name'])
+
+	return groupinfo
 
 def getUserGroup(username):
 	'''

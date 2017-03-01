@@ -6,6 +6,7 @@ import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'monitor.settings'
 import django
 django.setup()
+from zabbix.views import *
 from zabbix.dbmod import DBMod
 from zabbix.zabbix_api import *
 from zabbix.contect import *
@@ -14,7 +15,8 @@ if __name__ == '__main__':
         z = ZabbixApi()
         # ah = z.getAllGroup()
         dbmode = DBMod()
-        a = dbmode.FromGroupidGetHostLoadid('SSP')
+        a = show_graph('zhanglei')
+        # a = dbmode.FromGroupidGetHostLoadid('SSP')
         print(a)
         # z.getGroupAvgTraff(grp_name,'out')
 
