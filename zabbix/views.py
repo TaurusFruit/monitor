@@ -325,8 +325,8 @@ def show_graph(username):
 	prompt = "%s 你好,\n" \
 	         "你可查看的主机组有:\n" % real_name
 	for each in group_info:
-		prompt += "%-10s : <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a> <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/0'>eth0</a> " \
-		          "<a href='http://zabbix.tansuotv.cn/wx_api/load/%s'>负载</a>\n" % (each,each,each,each)
+		prompt += "%-15s : 网卡查看 <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a>\t<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/0'>eth0</a> " \
+		          "<a href='http://zabbix.tansuotv.cn/wx_api/load/%s'>查看负载</a>\n" % (each,each,each,each)
 	return prompt
 
 
