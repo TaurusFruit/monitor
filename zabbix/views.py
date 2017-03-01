@@ -297,15 +297,6 @@ def _wx_post(request,wxcpt):
 				ResContent = _show_help(Msg_dick['FromUserName'])
 			elif Msg_dick['EventKey'] == 'show_graph':
 				ResContent = show_graph(Msg_dick['FromUserName'])
-			# elif 'traf' in Msg_dick['EventKey'] or 'load' in Msg_dick['EventKey'] :
-			# 	if 'traf' in Msg_dick['EventKey'] :
-			# 		tag = 'traf'
-			# 	elif 'load' in Msg_dick['EventKey'] :
-			# 		tag = 'load'
-			# 	group_name = Msg_dick['EventKey'].split('_')[1]
-			# 	ResContent = _show_group_graph(Msg_dick['FromUserName'],group_name,tag)
-
-
 	res = ResData(wxcpt,Msg_dick['ToUserName'],Msg_dick['FromUserName'],Msg_dick['CreateTime'],ResContent,sReqNonce,sReqTimeStamp)
 	return HttpResponse(res)
 
@@ -328,30 +319,6 @@ def show_graph(username):
 		prompt += "%-10s : <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a>\t<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/0'>eth0</a>\t" \
 		          "<a href='http://zabbix.tansuotv.cn/wx_api/load/%s'>系统负载</a>\n" % (each,each,each,each)
 	return prompt
-
-
-def _show_group_graph(username,groupname,tag):
-	'''
-	获取流量图信息
-	:param username:
-	:param groupname:
-	:return:
-	'''
-	contect_info = contect.getUserGroup(username)
-	if username in contect.User.keys() :
-		real_name = contect.User[username]
-	else:
-		return "您好,你还没有相关权限,请联系管理员."
-	if groupname not in contect_info and 'admin' not in contect_info:
-		return "%s 你好,你没有查看 %s 组 权限,请联系管理员" % (real_name,groupname)
-	if tag == 'traf':
-		msg = "%s 你好,查看 %s 主机组流量图请点击: <a href='http://zabbix.tansuotv.cn/wx_api/network/%s/1'>eth1</a>" \
-	      "查看<a href='http://zabbix.tansuotv.cn/wx_api/network/%s/0'>eth0</a>" % (real_name,groupname,groupname,groupname)
-	elif tag == 'load':
-		msg = "%s 你好,查看 %s 主机负载图请点击: <a href='http://zabbix.tansuotv.cn/wx_api/load/%s'>点击</a>" % (real_name,groupname,groupname)
-
-	return msg
-
 
 def _show_help(username):
 	msg = "%s 你好\n点击报警报警信息可进入报警详情页面\n在报警详情页面可以进行知悉事件操作\n" \

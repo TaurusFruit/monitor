@@ -8,7 +8,7 @@ Group = {
 		'name':'admin',
 		'users':[
 			'zhajx',
-			# 'zhanglei'
+			'zhanglei'
 		]
 	},
 	3:{
@@ -16,14 +16,12 @@ Group = {
 		'users':[
 			'yangyy',
 			'zhaohl',
-			'zhanglei'
 		]
 	},
 	4:{
 		'name':'Hadoop',
 		'users':[
 			'lizhang',
-			'zhanglei',
 		]
 	},
 	5:{
